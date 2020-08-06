@@ -1,0 +1,31 @@
+//File use for mongodb schemas
+import { Schema } from "mongoose"; 
+//Interfaces
+import { IRoom } from "src/rooms/domain/interfaces/room.interface";
+
+let validRoomTypes = {
+  values: ["SINGLE", "DOUBLE", "SUITE"],
+  message: "{VALUE} is not a valid room type"
+};
+
+const ServiceSchema = new Schema({
+  description : String
+});
+
+const AditionalSchema = new Schema({
+  price : Number,
+  description : Number,
+});
+
+export const RoomSchema = new Schema<IRoom>({
+  number : String,
+  price : Number,
+  type : {
+    type : String,
+    enum : validRoomTypes
+  },
+  services : [ServiceSchema],
+  aditionals : [AditionalSchema]
+});
+/*PLUGINS ZONE*/
+
