@@ -9,6 +9,7 @@ require("dotenv").config();
 // App Modules
 import { RoomsModule } from './rooms/infraestructure/rooms.module';
 import { HotelsModule } from './hotels/infrastructure/hotels.module';
+import { ReservationsModule } from './reservations/infrastructure/reservations.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { HotelsModule } from './hotels/infrastructure/hotels.module';
       useUnifiedTopology: true,
       useFindAndModify: false
     }),
+    ReservationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
