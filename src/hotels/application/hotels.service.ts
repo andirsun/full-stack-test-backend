@@ -8,6 +8,7 @@ import { CreateRoomDTO } from 'src/rooms/domain/dto/room.dto';
 // Interfaces
 import { IRoom } from 'src/rooms/domain/interfaces/room.interface';
 import { IHotel } from '../domain/interfaces/hotel.interface';
+import { CreateServiceDTO } from 'src/rooms/domain/dto/service.dto';
 
 @Injectable()
 export class HotelsService {
@@ -16,7 +17,13 @@ export class HotelsService {
     @InjectModel('Rooms') private readonly roomModel : Model<IRoom>,
     @InjectModel('Hotels') private readonly hotelModel : Model<IHotel>,
   ){}
-
+  
+  /*
+    THis functions search a specific hotel
+  */
+  async getHotel(idHotel : string){
+    return await this.hotelModel.findById(idHotel);
+  }
   /*
     THis function create a Hotel. you need to pass the
     CreateHotelDto object to works
@@ -34,5 +41,12 @@ export class HotelsService {
     let room = new this.roomModel(createRoomDTO);
     //Add the current date and registration method
     return await this.hotelModel.findByIdAndUpdate(createRoomDTO.idHotel,{$push : {rooms : room}},{new : true});
+  }
+  /*
+    This function create a new room service or characteristic 
+  */
+  async createService(idHotel : string,createServiceDTO : CreateServiceDTO){
+    let hotel2 = await this.hotelModel.update({"rooms._id" : createServiceDTO.idRoom}, {$push :{'rooms.$.services': createServiceDTO}}, {upsert: true});
+    return hotel2
   }
 }
