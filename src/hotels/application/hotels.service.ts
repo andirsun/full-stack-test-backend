@@ -9,6 +9,7 @@ import { CreateRoomDTO } from 'src/rooms/domain/dto/room.dto';
 import { IRoom } from 'src/rooms/domain/interfaces/room.interface';
 import { IHotel } from '../domain/interfaces/hotel.interface';
 import { CreateServiceDTO } from 'src/rooms/domain/dto/service.dto';
+import { CreateAditionalDTO } from 'src/rooms/domain/dto/aditional.dto';
 
 @Injectable()
 export class HotelsService {
@@ -45,8 +46,16 @@ export class HotelsService {
   /*
     This function create a new room service or characteristic 
   */
-  async createService(idHotel : string,createServiceDTO : CreateServiceDTO){
-    let hotel2 = await this.hotelModel.update({"rooms._id" : createServiceDTO.idRoom}, {$push :{'rooms.$.services': createServiceDTO}}, {upsert: true});
+  async createService(createServiceDTO : CreateServiceDTO){
+    let hotel2 = await this.hotelModel.updateOne({"rooms._id" : createServiceDTO.idRoom}, {$push :{'rooms.$.services': createServiceDTO}}, {new: true});
+    return hotel2
+  }
+  /*
+    This function create a new room service or characteristic 
+  */
+  async createAditional(createAditionalDTO : CreateAditionalDTO){
+    // Insert the additional service into the array of services into sub room document
+    let hotel2 = await this.hotelModel.updateOne({"rooms._id" : createAditionalDTO.idRoom}, {$push :{'rooms.$.aditionals': createAditionalDTO}}, {new: true});
     return hotel2
   }
 }

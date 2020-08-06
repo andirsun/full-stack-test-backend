@@ -1,8 +1,11 @@
 import { Controller, Post, Res, Body, HttpStatus } from '@nestjs/common';
+// Services
 import { HotelsService } from '../application/hotels.service';
+// Dtos
 import { CreateHotelDTO } from '../domain/dto/hotel.dto';
 import { CreateRoomDTO } from 'src/rooms/domain/dto/room.dto';
 import { CreateServiceDTO } from 'src/rooms/domain/dto/service.dto';
+import { CreateAditionalDTO } from 'src/rooms/domain/dto/aditional.dto';
 
 @Controller('hotels')
 export class HotelsController {
@@ -57,7 +60,27 @@ export class HotelsController {
 
   @Post('/rooms/services/new')
   async createNewRoomService(@Res()res, @Body() createServiceDTO: CreateServiceDTO){
-    this.hotelService.createService("",createServiceDTO)
+    this.hotelService.createService(createServiceDTO)
+      .then(response =>{
+        return res.status(HttpStatus.OK).json({
+          content:{
+            response
+          }
+        })
+      })
+      .catch(err =>{
+        res.status(HttpStatus.BAD_REQUEST).json({
+          content : {
+            message: 'Ups! Ha ocurrido un error'
+          }
+        })
+        throw new Error(err);
+      });
+  }
+
+  @Post('/rooms/aditionals/new')
+  async createNewRoomAditionalService(@Res()res, @Body() createAditionalDTO: CreateAditionalDTO){
+    this.hotelService.createAditional(createAditionalDTO)
       .then(response =>{
         return res.status(HttpStatus.OK).json({
           content:{
