@@ -4,12 +4,17 @@ import { AppService } from './app.service';
 //Mongoose ORM Database Module COnection
 import { MongooseModule } from "@nestjs/mongoose";
 // .env dependencies
-//import { ConfigModule } from '@nestjs/config';
-import { HotelsModule } from './hotels/infrastructure/hotels.module';
 require("dotenv").config();
+//import { ConfigModule } from '@nestjs/config';
+// App Modules
+import { RoomsModule } from './rooms/infraestructure/rooms.module';
+import { HotelsModule } from './hotels/infrastructure/hotels.module';
 
 @Module({
   imports: [
+    /* App Modules */
+    HotelsModule,
+    RoomsModule,
     /* .env variables */
     // ConfigModule.forRoot({
     //   envFilePath : '.env',
@@ -23,7 +28,6 @@ require("dotenv").config();
       useUnifiedTopology: true,
       useFindAndModify: false
     }),
-    HotelsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
