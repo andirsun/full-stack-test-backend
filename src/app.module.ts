@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from "@nestjs/mongoose";
 // .env dependencies
 //import { ConfigModule } from '@nestjs/config';
+import { HotelsModule } from './hotels/infrastructure/hotels.module';
 require("dotenv").config();
 
 @Module({
@@ -22,6 +23,7 @@ require("dotenv").config();
       useUnifiedTopology: true,
       useFindAndModify: false
     }),
+    HotelsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
