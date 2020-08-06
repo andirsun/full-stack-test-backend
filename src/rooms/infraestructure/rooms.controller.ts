@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
+//Services
 
 @Controller('rooms')
-export class RoomsController {}
+export class RoomsController {
+
+  constructor(
+  ){}
+
+  
+
+}

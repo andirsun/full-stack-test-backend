@@ -1,6 +1,7 @@
 import { Controller, Post, Res, Body, HttpStatus } from '@nestjs/common';
 import { HotelsService } from '../application/hotels.service';
 import { CreateHotelDTO } from '../domain/dto/hotel.dto';
+import { CreateRoomDTO } from 'src/rooms/domain/dto/room.dto';
 
 @Controller('hotels')
 export class HotelsController {
@@ -20,6 +21,26 @@ export class HotelsController {
         return res.status(HttpStatus.OK).json({
           content:{
             hotel
+          }
+        })
+      })
+      .catch(err =>{
+        res.status(HttpStatus.BAD_REQUEST).json({
+          content : {
+            message: 'Ups! Ha ocurrido un error'
+          }
+        })
+        throw new Error(err);
+      });
+  }
+
+  @Post('/rooms/new')
+  async createNewRoom(@Res()res, @Body() createRoomDTO: CreateRoomDTO){
+    this.hotelService.createRoom(createRoomDTO)
+      .then(hotel =>{
+        return res.status(HttpStatus.OK).json({
+          content:{
+            rooms : hotel.rooms
           }
         })
       })

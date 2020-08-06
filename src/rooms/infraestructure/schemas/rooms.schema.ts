@@ -18,8 +18,10 @@ const AditionalSchema = new Schema({
 });
 
 export const RoomSchema = new Schema<IRoom>({
-  number : String,
+  number : Number,
   price : Number,
+  urlImg : String,
+  description :String,
   type : {
     type : String,
     enum : validRoomTypes
