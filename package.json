@@ -1,7 +1,7 @@
 {
   "name": "full-stack-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "https://us-central1-timugo-api.cloudfunctions.net/apitocoma",
   "author": "Anderson Laverde",
   "private": true,
   "license": "MIT",

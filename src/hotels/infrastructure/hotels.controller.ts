@@ -1,4 +1,4 @@
-import { Controller, Post, Res, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Res, Body, HttpStatus, Get } from '@nestjs/common';
 // Services
 import { HotelsService } from '../application/hotels.service';
 // Dtos
@@ -14,6 +14,29 @@ export class HotelsController {
     private hotelService : HotelsService
   ){}
   
+  /*
+    Endpoint to fetch all hotels
+  */
+  @Get('/all')
+  async getHotels(@Res() res){
+    // Using the hotel service to make the used db insertion
+    this.hotelService.getHotels()
+      .then(hotels =>{
+        return res.status(HttpStatus.OK).json({
+          content:{
+            hotels
+          }
+        })
+      })
+      .catch(err =>{
+        res.status(HttpStatus.BAD_REQUEST).json({
+          content : {
+            message: 'Ups! Ha ocurrido un error'
+          }
+        })
+        throw new Error(err);
+      });
+  }
   /*
     Endpoint to create a new hotel
   */

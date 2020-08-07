@@ -26,6 +26,12 @@ export class HotelsService {
     return await this.hotelModel.findById(idHotel);
   }
   /*
+    This functions search all hotels
+  */
+  async getHotels() : Promise<IHotel[]>{
+    return await this.hotelModel.find();
+  }
+  /*
     THis function create a Hotel. you need to pass the
     CreateHotelDto object to works
   */
