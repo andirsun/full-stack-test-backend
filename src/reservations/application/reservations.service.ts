@@ -18,4 +18,11 @@ export class ReservationsService {
     const reservation = new this.reservationModel(createReservationDTO);
     return await reservation.save();
   }
+  /*
+    This function return all reservations by user
+  */
+  async getReservations() : Promise<IReservation[]>{
+    return await this.reservationModel.find();
+  }
+
 }
